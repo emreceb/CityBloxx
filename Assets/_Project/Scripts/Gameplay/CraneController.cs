@@ -24,9 +24,20 @@ public class CraneController : MonoBehaviour
         if (!isSwinging) return;
         if (GameManager.Instance.CurrentState != GameManager.GameState.Playing) return;
 
+        // Sallama
         timeCounter += Time.deltaTime * swingSpeed;
         float angle = Mathf.Sin(timeCounter) * swingAngle;
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+        // Vinç kuleyle birlikte yukarý çýkar
+        if (TowerManager.Instance != null)
+        {
+            float towerTop = TowerManager.Instance.GetCurrentTopY();
+            float targetY = towerTop + 5f;
+            Vector3 pos = transform.position;
+            pos.y = Mathf.Lerp(pos.y, targetY, Time.deltaTime * 3f);
+            transform.position = pos;
+        }
     }
 
     public void DropBlock()

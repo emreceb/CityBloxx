@@ -54,16 +54,13 @@ public class TowerManager : MonoBehaviour
         block.transform.position = new Vector3(0f, currentTopY + blockHeight / 2f, 0f);
         block.transform.localScale = new Vector3(blockWidth, blockHeight, 1f);
 
-        // Hizalama kalitesini logla (ileride puan sistemi için)
-        if (diff < 0.1f)
-            Debug.Log("MUKEMMEL! Diff: " + diff);
-        else if (diff < 0.4f)
-            Debug.Log("IYI! Diff: " + diff);
-        else
-            Debug.Log("KOTU! Diff: " + diff);
+        ScoreManager.Instance.AddScore(diff, blockWidth);
 
         placedBlocks.Add(block);
         currentTopY += blockHeight;
+
+        GameHUD hud = FindFirstObjectByType<GameHUD>();
+        if (hud != null) hud.IncrementBlockCount();
 
         SpawnNextBlock();
     }
