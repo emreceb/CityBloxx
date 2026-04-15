@@ -37,5 +37,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         ChangeState(GameState.GameOver);
+        GameOverUI ui = FindFirstObjectByType<GameOverUI>();
+        if (ui != null) ui.ShowGameOver();
     }
 }
