@@ -2,41 +2,60 @@ using UnityEngine;
 
 public class CraneController : MonoBehaviour
 {
-    [Header("Crane Settings")]
-    public float swingSpeed = 1.5f;
-    public float swingAngle = 45f;
-    public Transform blockHangPoint;
+    [Header("Swing Settings")]
+    public float swingSpeed = 1.2f;
+    public float swingAngle = 35f;
+    public float ropeLength = 4f;
 
     [Header("References")]
     public GameObject currentBlock;
+    public LineRenderer lineRenderer;
 
     private bool isSwinging = true;
     private float timeCounter = 0f;
+    private Vector3 anchorPoint;
 
     private void Start()
     {
-        // Baþlangýçta ilk bloðu oluþtur
+        anchorPoint = transform.position;
         TowerManager.Instance.SpawnNextBlock();
     }
 
     private void Update()
     {
-        if (!isSwinging) return;
         if (GameManager.Instance.CurrentState != GameManager.GameState.Playing) return;
 
-        // Sallama
-        timeCounter += Time.deltaTime * swingSpeed;
-        float angle = Mathf.Sin(timeCounter) * swingAngle;
-        transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        // Vinç anchor noktasý her zaman ekranýn üstünde sabit X:0'da
+        anchorPoint = new Vector3(0f, transform.position.y, 0f);
 
-        // Vinç kuleyle birlikte yukarý çýkar
+        if (isSwinging && currentBlock != null)
+        {
+            timeCounter += Time.deltaTime * swingSpeed;
+            float angle = Mathf.Sin(timeCounter) * swingAngle;
+            float rad = angle * Mathf.Deg2Rad;
+
+            float blockX = anchorPoint.x + Mathf.Sin(rad) * ropeLength;
+            float blockY = anchorPoint.y - Mathf.Cos(rad) * ropeLength;
+
+            currentBlock.transform.position = new Vector3(blockX, blockY, 0f);
+            currentBlock.transform.rotation = Quaternion.identity;
+
+            // Ýpi çiz
+            if (lineRenderer != null)
+            {
+                lineRenderer.enabled = true;
+                lineRenderer.SetPosition(0, anchorPoint);
+                lineRenderer.SetPosition(1, currentBlock.transform.position);
+            }
+        }
+
+        // Vinç kuleyle yükselir
         if (TowerManager.Instance != null)
         {
             float towerTop = TowerManager.Instance.GetCurrentTopY();
-            float targetY = towerTop + 5f;
-            Vector3 pos = transform.position;
-            pos.y = Mathf.Lerp(pos.y, targetY, Time.deltaTime * 3f);
-            transform.position = pos;
+            float targetY = Mathf.Max(towerTop + ropeLength + 2f, 6f);
+            float newY = Mathf.Lerp(transform.position.y, targetY, Time.deltaTime * 4f);
+            transform.position = new Vector3(0f, newY, 0f);
         }
     }
 
@@ -47,8 +66,6 @@ public class CraneController : MonoBehaviour
 
         isSwinging = false;
 
-        currentBlock.transform.SetParent(null);
-
         Rigidbody2D rb = currentBlock.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -58,14 +75,15 @@ public class CraneController : MonoBehaviour
             rb.angularVelocity = 0f;
         }
 
-        Debug.Log("Block dropped!");
+        if (lineRenderer != null)
+            lineRenderer.enabled = false;
     }
 
     public void ResetCrane(GameObject newBlock)
     {
         currentBlock = newBlock;
+        newBlock.transform.SetParent(null);
         timeCounter = 0f;
         isSwinging = true;
-        transform.rotation = Quaternion.identity;
     }
 }

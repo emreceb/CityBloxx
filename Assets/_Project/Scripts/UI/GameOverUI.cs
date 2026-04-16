@@ -23,6 +23,9 @@ public class GameOverUI : MonoBehaviour
 
     private void RestartGame()
     {
+        Time.timeScale = 1f;
+        ScoreManager.Instance.ResetScore();
+        GameManager.Instance.StartGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

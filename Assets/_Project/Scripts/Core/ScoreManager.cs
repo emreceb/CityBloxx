@@ -16,7 +16,7 @@ public class ScoreManager : MonoBehaviour
             return;
         }
         Instance = this;
-        highScore = PlayerPrefs.GetInt("HighScore", 0);
+        DontDestroyOnLoad(gameObject);
     }
 
     public void AddScore(float diff, float blockWidth)
