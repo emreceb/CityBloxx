@@ -68,6 +68,8 @@ public class TowerManager : MonoBehaviour
         if (hud != null) hud.IncrementBlockCount();
 
         SpawnNextBlock();
+
+        Debug.Log("CurrentTopY: " + currentTopY);
     }
 
     public void SpawnNextBlock()

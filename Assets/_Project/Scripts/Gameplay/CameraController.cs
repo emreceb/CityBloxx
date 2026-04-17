@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public float smoothSpeed = 4f;
+    public float smoothSpeed = 2f;
     private float targetY;
+    private float initialTopY;
+    private bool initialized = false;
 
     private void Start()
     {
-        targetY = 0f;
+        targetY = transform.position.y;
     }
 
     private void LateUpdate()
@@ -16,9 +18,19 @@ public class CameraController : MonoBehaviour
 
         float towerTop = TowerManager.Instance.GetCurrentTopY();
 
-        if (towerTop > 3f)
+        if (!initialized)
         {
-            targetY = Mathf.Lerp(targetY, towerTop - 3f, Time.deltaTime * smoothSpeed);
+            initialTopY = towerTop;
+            initialized = true;
+            return;
+        }
+
+        // Baþlangýçtan 3 birim yükseldikten sonra yavaþça takip et
+        float risen = towerTop - initialTopY;
+        if (risen > 3f)
+        {
+            float desiredY = risen - 3f;
+            targetY = Mathf.Lerp(targetY, desiredY, Time.deltaTime * smoothSpeed);
             transform.position = new Vector3(0f, targetY, -10f);
         }
     }
