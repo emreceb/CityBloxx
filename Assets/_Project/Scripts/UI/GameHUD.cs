@@ -5,6 +5,7 @@ public class GameHUD : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI blockCountText;
+    public TextMeshProUGUI difficultyText;
 
     private int blockCount = 0;
     private int maxBlocks = 20;
@@ -15,6 +16,9 @@ public class GameHUD : MonoBehaviour
             scoreText.text = "Skor: " + ScoreManager.Instance.GetScore();
 
         blockCountText.text = blockCount + "/" + maxBlocks;
+
+        if (DifficultyManager.Instance != null)
+            difficultyText.text = DifficultyManager.Instance.GetLevelName();
     }
 
     public void IncrementBlockCount()

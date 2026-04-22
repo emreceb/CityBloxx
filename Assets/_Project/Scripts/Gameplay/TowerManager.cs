@@ -67,6 +67,8 @@ public class TowerManager : MonoBehaviour
         GameHUD hud = FindFirstObjectByType<GameHUD>();
         if (hud != null) hud.IncrementBlockCount();
 
+        DifficultyManager.Instance.OnBlockPlaced(placedBlocks.Count);
+
         SpawnNextBlock();
 
         Debug.Log("CurrentTopY: " + currentTopY);

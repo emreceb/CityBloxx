@@ -27,5 +27,6 @@ public class GameOverUI : MonoBehaviour
         ScoreManager.Instance.ResetScore();
         GameManager.Instance.StartGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        DifficultyManager.Instance.Reset();
     }
 }
