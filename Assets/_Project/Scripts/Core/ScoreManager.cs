@@ -29,20 +29,20 @@ public class ScoreManager : MonoBehaviour
         if (ratio < 0.1f)
         {
             points = 20;
-            EffectsManager.Instance.PlayEffect("perfect", Vector3.zero);
+            AudioManager.Instance.PlayPerfect();
             Debug.Log("MUKEMMEL! +" + points);
         }
         else if (ratio < 0.4f)
         {
             points = 10;
-            EffectsManager.Instance.PlayEffect("good", Vector3.zero);
+            AudioManager.Instance.PlayGood();
             Debug.Log("IYI! +" + points);
         }
         else
         {
             points = 5;
             comboCount = 0;
-            EffectsManager.Instance.PlayEffect("bad", Vector3.zero);
+            AudioManager.Instance.PlayBad();
             Debug.Log("KOTU! +" + points);
         }
 

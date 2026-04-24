@@ -63,6 +63,8 @@ public class CraneController : MonoBehaviour
 
         if (lineRenderer != null)
             lineRenderer.enabled = false;
+
+        AudioManager.Instance.PlayBlockDrop();
     }
 
     public void ResetCrane(GameObject newBlock)

@@ -39,5 +39,7 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.GameOver);
         GameOverUI ui = FindFirstObjectByType<GameOverUI>();
         if (ui != null) ui.ShowGameOver();
+
+        AudioManager.Instance.PlayGameOver();
     }
 }
