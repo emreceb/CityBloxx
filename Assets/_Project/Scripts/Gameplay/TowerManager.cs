@@ -8,7 +8,7 @@ public class TowerManager : MonoBehaviour
     public GameObject blockPrefab;
     public Transform craneTransform;
     public float blockHeight = 1f;
-    public float blockWidth = 1.5f;
+    public float blockWidth = 1f;
     public float groundY = -4f; // Ground'un Y pozisyonu
 
     private List<GameObject> placedBlocks = new List<GameObject>();
@@ -51,18 +51,24 @@ public class TowerManager : MonoBehaviour
             rb.angularVelocity = 0f;
         }
 
-        // X pozisyonunu olduðu yerde býrak, sadece Y'yi sabitle
+        // Bloðun gerçek sprite yüksekliðini hesapla
+        SpriteRenderer sr = block.GetComponent<SpriteRenderer>();
+        float realHeight = sr != null ? sr.bounds.size.y : blockHeight;
+
         block.transform.position = new Vector3(
             block.transform.position.x,
-            currentTopY + blockHeight / 2f,
+            currentTopY + realHeight / 2f,
             0f
         );
+
+        // currentTopY'yi gerçek yüksekliðe göre güncelle
+        currentTopY += realHeight;
         block.transform.localScale = new Vector3(blockWidth, blockHeight, 1f);
 
         ScoreManager.Instance.AddScore(diff, blockWidth);
 
         placedBlocks.Add(block);
-        currentTopY += blockHeight;
+       
 
         GameHUD hud = FindFirstObjectByType<GameHUD>();
         if (hud != null) hud.IncrementBlockCount();
