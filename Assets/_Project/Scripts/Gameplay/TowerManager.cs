@@ -28,8 +28,8 @@ public class TowerManager : MonoBehaviour
     public void BlockLanded(GameObject block, float landedX)
     {
         float previousX = placedBlocks.Count > 0
-            ? placedBlocks[placedBlocks.Count - 1].transform.position.x
-            : 0f;
+    ? placedBlocks[placedBlocks.Count - 1].transform.position.x
+    : block.transform.position.x;
 
         float diff = Mathf.Abs(landedX - previousX);
 
@@ -65,7 +65,7 @@ public class TowerManager : MonoBehaviour
         currentTopY += realHeight;
         block.transform.localScale = new Vector3(blockWidth, blockHeight, 1f);
 
-        ScoreManager.Instance.AddScore(diff, blockWidth);
+        ScoreManager.Instance.AddScore(diff, blockWidth, block.transform.position);
 
         placedBlocks.Add(block);
        
