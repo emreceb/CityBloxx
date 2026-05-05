@@ -19,7 +19,7 @@ public class ScoreManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void AddScore(float diff, float blockWidth, Vector3 blockPosition)
+    public void AddScore(float diff, float blockWidth)
     {
         int points = 0;
         comboCount++;
@@ -30,20 +30,20 @@ public class ScoreManager : MonoBehaviour
         {
             points = 20;
             AudioManager.Instance.PlayPerfect();
-            EffectsManager.Instance.PlayEffect("perfect", blockPosition - new Vector3(0, 0.5f, 0));
+            Debug.Log("MUKEMMEL! +" + points);
         }
         else if (ratio < 0.4f)
         {
             points = 10;
             AudioManager.Instance.PlayGood();
-            EffectsManager.Instance.PlayEffect("good", blockPosition - new Vector3(0, 0.5f, 0));
+            Debug.Log("IYI! +" + points);
         }
         else
         {
             points = 5;
             comboCount = 0;
             AudioManager.Instance.PlayBad();
-            EffectsManager.Instance.PlayEffect("bad", blockPosition - new Vector3(0, 0.5f, 0));
+            Debug.Log("KOTU! +" + points);
         }
 
         // Combo bonusu

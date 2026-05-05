@@ -17,7 +17,6 @@ public class GameOverUI : MonoBehaviour
 
     public void ShowGameOver()
     {
-        Debug.Log("Panel aktif ediliyor: " + gameOverPanel.name);
         gameOverPanel.SetActive(true);
         finalScoreText.text = "Skor: " + ScoreManager.Instance.GetScore();
     }
