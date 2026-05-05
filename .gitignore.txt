@@ -1,0 +1,22 @@
+# Visual Studio
+.vs/
+*.vsidx
+# Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+*.pidb
+*.booproj
+*.svd
+*.userprefs
+*.csproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.unityproj
+*.DS_Store
