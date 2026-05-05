@@ -4,13 +4,6 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
-    [Header("Audio Sources")]
-    public AudioSource musicSource;
-    public AudioSource sfxSource;
-
-    [Header("Music")]
-    public AudioClip backgroundMusic;
-
     [Header("SFX")]
     public AudioClip blockDropSound;
     public AudioClip perfectSound;
@@ -18,6 +11,12 @@ public class AudioManager : MonoBehaviour
     public AudioClip badSound;
     public AudioClip gameOverSound;
     public AudioClip buttonClickSound;
+
+    [Header("Music")]
+    public AudioClip backgroundMusic;
+
+    private AudioSource sfxSource;
+    private AudioSource musicSource;
 
     private void Awake()
     {
@@ -28,32 +27,17 @@ public class AudioManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-    }
 
-    private void Start()
-    {
-        AudioListener.volume = 1f;
-        Debug.Log("SfxSource: " + sfxSource);
-        Debug.Log("BlockDropSound: " + blockDropSound);
-
-        // Direkt AudioSource üzerinden test
-        sfxSource.clip = blockDropSound;
-        sfxSource.Play();
-        Debug.Log("Play cagrildi");
+        sfxSource = gameObject.AddComponent<AudioSource>();
+        musicSource = gameObject.AddComponent<AudioSource>();
+        musicSource.loop = true;
+        musicSource.volume = 0.5f;
     }
 
     public void PlaySFX(AudioClip clip)
     {
-        
-        
-        if (clip == null)
-        {
-            Debug.Log("Clip NULL!");
-            return;
-        }
-        Debug.Log("Ses caliniyor: " + clip.name);
+        if (clip == null || sfxSource == null) return;
         sfxSource.PlayOneShot(clip);
-
     }
 
     public void PlayBlockDrop() => PlaySFX(blockDropSound);
@@ -65,6 +49,7 @@ public class AudioManager : MonoBehaviour
 
     public void ToggleMusic(bool isOn)
     {
-        musicSource.volume = isOn ? 1f : 0f;
+        if (musicSource == null) return;
+        musicSource.volume = isOn ? 0.5f : 0f;
     }
 }
