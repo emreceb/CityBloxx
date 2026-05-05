@@ -11880,7 +11880,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0038090646, y: 0.007956266}
+  m_Offset: {x: 0.0029430687, y: 0.007956266}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -11890,7 +11890,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.99435586, y: 1.0251101}
+  m_Size: {x: 1.1819131, y: 1.0251101}
   m_EdgeRadius: 0
 --- !u!212 &1552214280
 SpriteRenderer:
@@ -11956,8 +11956,8 @@ Transform:
   m_GameObject: {fileID: 1552214278}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0475, y: -6, z: 0}
-  m_LocalScale: {x: 7.6529374, y: 0.5, z: 1}
+  m_LocalPosition: {x: 0.0168, y: -6, z: 0}
+  m_LocalScale: {x: 7.7145376, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -17082,10 +17082,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29829caa0ac1ebc40b6d6af61853e22d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockPrefab: {fileID: 7792295856821068233, guid: d3f2ff8d593acdb4aadc206529819675, type: 3}
-  craneTransform: {fileID: 0}
-  blockHeight: 1.5
-  blockWidth: 1.5
+  blockPrefab: {fileID: 1586604663739600421, guid: 05d83e512008e4a47aa2f693b64fbe56, type: 3}
+  blockHeight: 1
+  blockWidth: 1
   groundY: -5.75
 --- !u!4 &1925890326
 Transform:

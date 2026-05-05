@@ -11,7 +11,7 @@ public class CraneController : MonoBehaviour
     public GameObject currentBlock;
     public LineRenderer lineRenderer;
 
-    private bool isSwinging = true;
+    private bool isSwinging = false;
     private float timeCounter = 0f;
 
     private void Start()
@@ -28,9 +28,7 @@ public class CraneController : MonoBehaviour
         float angle = Mathf.Sin(timeCounter) * swingAngle;
         float rad = angle * Mathf.Deg2Rad;
 
-        // Vincin dünya pozisyonu — child olduðu için kamerayla birlikte hareket eder
         Vector3 craneWorldPos = transform.position;
-
         float blockX = craneWorldPos.x + Mathf.Sin(rad) * ropeLength;
         float blockY = craneWorldPos.y - Mathf.Cos(rad) * ropeLength;
 
@@ -47,8 +45,7 @@ public class CraneController : MonoBehaviour
 
     public void DropBlock()
     {
-        if (!isSwinging) return;
-        if (currentBlock == null) return;
+        if (!isSwinging || currentBlock == null) return;
 
         isSwinging = false;
 
@@ -56,6 +53,7 @@ public class CraneController : MonoBehaviour
         if (rb != null)
         {
             rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.simulated = true;
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;

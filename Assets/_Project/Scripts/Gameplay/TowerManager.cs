@@ -4,12 +4,12 @@ using System.Collections.Generic;
 public class TowerManager : MonoBehaviour
 {
     public static TowerManager Instance { get; private set; }
+
     [Header("Settings")]
     public GameObject blockPrefab;
-    public Transform craneTransform;
-    public float blockHeight = 1f;
-    public float blockWidth = 1f;
-    public float groundY = -4f; // Ground'un Y pozisyonu
+    public float blockHeight = 1.5f;
+    public float blockWidth = 1.5f;
+    public float groundY = -6f;
 
     private List<GameObject> placedBlocks = new List<GameObject>();
     private float currentTopY;
@@ -22,27 +22,32 @@ public class TowerManager : MonoBehaviour
             return;
         }
         Instance = this;
-        currentTopY = groundY; // Baþlangýç zeminden baþlasýn
+        ResetTower();
+    }
+
+    public void ResetTower()
+    {
+        foreach (GameObject block in placedBlocks)
+            if (block != null) Destroy(block);
+        placedBlocks.Clear();
+        currentTopY = groundY;
     }
 
     public void BlockLanded(GameObject block, float landedX)
     {
         float previousX = placedBlocks.Count > 0
-    ? placedBlocks[placedBlocks.Count - 1].transform.position.x
-    : block.transform.position.x;
+            ? placedBlocks[placedBlocks.Count - 1].transform.position.x
+            : landedX;
 
         float diff = Mathf.Abs(landedX - previousX);
 
-        // Tamamen kaçýrdýysa game over
-        if (diff > blockWidth)
+        if (placedBlocks.Count > 0 && diff > blockWidth)
         {
             Destroy(block);
             GameManager.Instance.GameOver();
-            Debug.Log("GAME OVER - Block missed!");
             return;
         }
 
-        // Bloðu dondur
         Rigidbody2D rb = block.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -51,55 +56,44 @@ public class TowerManager : MonoBehaviour
             rb.angularVelocity = 0f;
         }
 
-        // Bloðun gerçek sprite yüksekliðini hesapla
-        SpriteRenderer sr = block.GetComponent<SpriteRenderer>();
-        float realHeight = sr != null ? sr.bounds.size.y : blockHeight;
+        block.transform.localScale = new Vector3(blockWidth, blockHeight, 1f);
 
         block.transform.position = new Vector3(
-            block.transform.position.x,
-            currentTopY + realHeight / 2f,
+            landedX,
+            currentTopY + blockHeight / 2f,
             0f
         );
 
-        // currentTopY'yi gerçek yüksekliðe göre güncelle
-        currentTopY += realHeight;
-        block.transform.localScale = new Vector3(blockWidth, blockHeight, 1f);
-
-        ScoreManager.Instance.AddScore(diff, blockWidth, block.transform.position);
+        currentTopY += blockHeight;
 
         placedBlocks.Add(block);
-       
-
-        GameHUD hud = FindFirstObjectByType<GameHUD>();
-        if (hud != null) hud.IncrementBlockCount();
-
+        ScoreManager.Instance.AddScore(diff, blockWidth, block.transform.position);
         DifficultyManager.Instance.OnBlockPlaced(placedBlocks.Count);
-
         SpawnNextBlock();
-
-        Debug.Log("CurrentTopY: " + currentTopY);
     }
 
     public void SpawnNextBlock()
     {
-        if (blockPrefab == null) return;
-
-        GameHUD hud = FindFirstObjectByType<GameHUD>();
-        if (hud != null) hud.IncrementBlockCount();
+        if (blockPrefab == null)
+        {
+            Debug.LogError("Block Prefab atanmamis!");
+            return;
+        }
 
         GameObject newBlock = Instantiate(blockPrefab);
         newBlock.transform.localScale = new Vector3(blockWidth, blockHeight, 1f);
 
         Rigidbody2D rb = newBlock.GetComponent<Rigidbody2D>();
-        if (rb != null) rb.bodyType = RigidbodyType2D.Kinematic;
+        if (rb != null)
+        {
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.simulated = true;
+        }
 
         CraneController crane = FindFirstObjectByType<CraneController>();
         if (crane != null)
             crane.ResetCrane(newBlock);
     }
 
-    public float GetCurrentTopY()
-    {
-        return currentTopY;
-    }
+    public float GetCurrentTopY() => currentTopY;
 }
