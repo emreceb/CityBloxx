@@ -20,7 +20,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        ChangeState(GameState.Playing); // MainMenu yerine Playing baþlat
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "GameplayScene")
+            ChangeState(GameState.Playing);
+        else
+            ChangeState(GameState.MainMenu);
     }
 
     public void ChangeState(GameState newState)
@@ -32,6 +35,8 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         ChangeState(GameState.Playing);
+        if (TowerManager.Instance != null)
+            TowerManager.Instance.ResetTower();
     }
 
     public void GameOver()
@@ -41,5 +46,23 @@ public class GameManager : MonoBehaviour
         if (ui != null) ui.ShowGameOver();
 
         AudioManager.Instance.PlayGameOver();
+    }
+
+    private void OnEnable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
+    {
+        if (scene.name == "GameplayScene")
+            ChangeState(GameState.Playing);
+        else if (scene.name == "MainMenu")
+            ChangeState(GameState.MainMenu);
     }
 }

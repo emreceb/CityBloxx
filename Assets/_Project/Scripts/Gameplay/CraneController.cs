@@ -16,6 +16,11 @@ public class CraneController : MonoBehaviour
 
     private void Start()
     {
+        Invoke("DelayedSpawn", 0.1f);
+    }
+
+    private void DelayedSpawn()
+    {
         TowerManager.Instance.SpawnNextBlock();
     }
 
