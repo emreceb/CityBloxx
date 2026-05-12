@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.Playing);
         if (TowerManager.Instance != null)
             TowerManager.Instance.ResetTower();
+        if (CityProgressManager.Instance != null)
+            CityProgressManager.Instance.Reset();
     }
 
     public void GameOver()

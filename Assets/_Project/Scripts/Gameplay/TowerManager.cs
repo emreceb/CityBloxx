@@ -84,6 +84,16 @@ public class TowerManager : MonoBehaviour
         GameObject newBlock = Instantiate(blockPrefab);
         newBlock.transform.localScale = new Vector3(blockWidth, blockHeight, 1f);
 
+        // Þehire göre sprite ata
+        SpriteRenderer sr = newBlock.GetComponent<SpriteRenderer>();
+        if (sr != null && BlockSpawner.Instance != null)
+        {
+            int currentCity = CityProgressManager.Instance.GetCurrentCity();
+            Sprite citySprite = BlockSpawner.Instance.GetBlockSprite(currentCity);
+            if (citySprite != null)
+                sr.sprite = citySprite;
+        }
+
         Rigidbody2D rb = newBlock.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
