@@ -129,10 +129,10 @@ TextureImporter:
       name: tokyoBlock_0
       rect:
         serializedVersion: 2
-        x: 43
-        y: 43
-        width: 414
-        height: 414
+        x: 49
+        y: 51
+        width: 400
+        height: 400
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

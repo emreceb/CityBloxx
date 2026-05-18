@@ -17470,6 +17470,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2109803555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2109803557}
+  - component: {fileID: 2109803556}
+  m_Layer: 0
+  m_Name: 'BlockSpawner '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2109803556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109803555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 997d0195497a4a744bb9c33aff96d2e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cityBlockSprites:
+  - {fileID: 948136123344663855, guid: 9e7120a7cf3c19a4ab226e7fb629e79b, type: 3}
+  - {fileID: -3655841615253239499, guid: 288c390eee9dcd047a32273bd72237aa, type: 3}
+  - {fileID: 7423630448753126752, guid: 19ee450e95648624da256d78c20ced28, type: 3}
+  - {fileID: 8593503563491542517, guid: b3ced113f4c3e084ca2a5561032ba502, type: 3}
+  - {fileID: 7852095353236602346, guid: ccd5910c5d739b3489d4ed7f6dd19a64, type: 3}
+--- !u!4 &2109803557
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109803555}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.3050184, y: -1.0899117, z: -0.013766964}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2135253036
 GameObject:
   m_ObjectHideFlags: 0
@@ -17540,3 +17590,4 @@ SceneRoots:
   - {fileID: 509407631}
   - {fileID: 953772623}
   - {fileID: 1861158668}
+  - {fileID: 2109803557}
