@@ -32,6 +32,10 @@ public class MainMenuUI : MonoBehaviour
         SceneManager.LoadScene("GameplayScene");
     }
 
+    public void OpenCities()
+    {
+        SceneManager.LoadScene("CitySelect");
+    }
     private void ToggleSound()
     {
         isSoundOn = !isSoundOn;
