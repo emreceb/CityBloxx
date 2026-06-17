@@ -69,6 +69,8 @@ public class TowerManager : MonoBehaviour
         placedBlocks.Add(block);
         ScoreManager.Instance.AddScore(diff, blockWidth, block.transform.position);
         DifficultyManager.Instance.OnBlockPlaced(placedBlocks.Count);
+        if (CityGameplayManager.Instance != null)
+            CityGameplayManager.Instance.OnBlockPlaced();
         CityProgressManager.Instance.OnBlockPlaced();
         SpawnNextBlock();
     }

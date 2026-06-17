@@ -32,6 +32,10 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game State: " + newState);
     }
 
+    public void WinLevel()
+    {
+        ChangeState(GameState.GameOver);
+    }
     public void StartGame()
     {
         ChangeState(GameState.Playing);

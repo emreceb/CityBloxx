@@ -5,7 +5,9 @@ public class BlockSpawner : MonoBehaviour
     public static BlockSpawner Instance { get; private set; }
 
     [Header("City Block Sprites")]
-    public Sprite[] cityBlockSprites; // 0=Istanbul, 1=Tokyo, 2=NewYork, 3=Paris, 4=Dubai
+    public Sprite[] cityBlockSprites;
+
+    private Sprite currentCitySprite;
 
     private void Awake()
     {
@@ -17,8 +19,15 @@ public class BlockSpawner : MonoBehaviour
         Instance = this;
     }
 
+    public void SetCitySprite(Sprite sprite)
+    {
+        currentCitySprite = sprite;
+    }
+
     public Sprite GetBlockSprite(int cityIndex)
     {
+        if (currentCitySprite != null)
+            return currentCitySprite;
         if (cityBlockSprites == null || cityBlockSprites.Length == 0)
             return null;
         int index = Mathf.Clamp(cityIndex - 1, 0, cityBlockSprites.Length - 1);
